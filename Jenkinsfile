@@ -38,6 +38,11 @@ podTemplate(label: 'mypod',
             }
         }
         container('kubectl') {
+            stage('testing'){
+                sh """
+                echo "THIS IS A TEST"
+                """
+            }
             stage('Deploy new Docker Image') {
                 sh """
                 #!/bin/bash

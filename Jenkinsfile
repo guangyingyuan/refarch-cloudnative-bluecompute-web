@@ -39,7 +39,8 @@ podTemplate(label: 'mypod',
         }
         container('kubectl') {
             stage('testing'){
-                sh "curl http://domain.com"
+                def cmd = "curl http://domain.com"
+                println "cmd[${cmd}]"
             }
             stage('Deploy new Docker Image') {
                 sh """

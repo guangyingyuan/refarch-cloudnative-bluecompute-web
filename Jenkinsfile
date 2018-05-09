@@ -39,7 +39,7 @@ podTemplate(label: 'mypod',
         }
         container('kubectl') {
             stage('testing'){
-                sh "ls -l"
+                sh "curl http://domain.com"
             }
             stage('Deploy new Docker Image') {
                 sh """

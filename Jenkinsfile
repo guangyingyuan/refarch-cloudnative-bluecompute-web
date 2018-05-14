@@ -6,7 +6,8 @@ podTemplate(label: 'mypod',
     ],
     containers: [
         containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl', ttyEnabled: true, command: 'cat'),
-        containerTemplate(name: 'docker' , image: 'docker:17.06.1-ce', ttyEnabled: true, command: 'cat')
+        containerTemplate(name: 'docker' , image: 'docker:17.06.1-ce', ttyEnabled: true, command: 'cat'),
+        containerTemplate(name: 'curl' , image: 'byrnedo/alpine-curl', ttyEnabled: true, command: 'cat')
   ]) {
 
     node('mypod') {
@@ -37,13 +38,15 @@ podTemplate(label: 'mypod',
                 """
             }
         }
-        container('kubectl') {
+        container('curl') {
             stage('testing'){
                 sh """
                 #!/bin/bash
                 curl -k -s -XGET -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoianBrZHpxeWFwMjI1dWNyOW54YnIiLCJyZWFsbU5hbWUiOiJjdXN0b21SZWFsbSIsInVuaXF1ZVNlY3VyaXR5TmFtZSI6ImFkbWluIiwiaXNzIjoiaHR0cHM6Ly9pY3Atc2UtZGV2LWNsdXN0ZXIuaWNwOjk0NDMvb2lkYy9lbmRwb2ludC9PUCIsImF1ZCI6IjhiZGViNjM2ODAyOTBmOGQyMzM1M2UwNWYwMzhiNTY3IiwiZXhwIjoxNTI2NDAxODU0LCJpYXQiOjE1MjY0MDE4NTQsInN1YiI6ImFkbWluIiwidGVhbVJvbGVNYXBwaW5ncyI6W119.InRtHzzW_KNU7R7ahf67I1YPS3qrb9BvwBDbuQ9XR1r45PvsSK5rQl5vgOIU-jK97jpdndtdS1eIBqlI29KziXDMnheikpOTggZObQJ6xCzFioWHidFnFCcXfnV-fj5OW2lWO8ROfefac5iKzQXTuTsQlTY1kn9ZW_nVqwk-4Z12YP8zbhA7PRFi1sJHxtsmy-wNcB48chYdV4vGa8RI7PKuaOZQl2v72F6LFxJ_xYN9e0WOYDZwfHZ5Uex1LlZimV7prxdpC78YjbG9k_nvV4EQPCYv88g3POMDBnpPVuB4UmVqDaPs-cGG5fKz-FmRij72u1u7dKsWcr-e1cqkSw' 'https://172.16.40.4:8443/va/api/get-report?namespace=default/blue-web-c6c46447c-qm4tv/d65ec48faefe49115c8e86a59b438a525b9e8fe32905f9dce4c3b541d4d42180&access_group=default&source_type=container&report_type=vulnerability'
                 """
             }
+        }
+        container('kubectl') {
             stage('Deploy new Docker Image') {
                 sh """
                 #!/bin/bash

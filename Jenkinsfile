@@ -39,9 +39,10 @@ podTemplate(label: 'mypod',
         }
         container('kubectl') {
             stage('testing'){
-                def cmd = "curl -k -s -XGET -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiNWhybWl4bjJsdmR2ZW12MDI0b2IiLCJyZWFsbU5hbWUiOiJjdXN0b21SZWFsbSIsInVuaXF1ZVNlY3VyaXR5TmFtZSI6ImFkbWluIiwiaXNzIjoiaHR0cHM6Ly9pY3Atc2UtZGV2LWNsdXN0ZXIuaWNwOjk0NDMvb2lkYy9lbmRwb2ludC9PUCIsImF1ZCI6IjhiZGViNjM2ODAyOTBmOGQyMzM1M2UwNWYwMzhiNTY3IiwiZXhwIjoxNTI1OTYwNTE4LCJpYXQiOjE1MjU5NjA1MTgsInN1YiI6ImFkbWluIiwidGVhbVJvbGVNYXBwaW5ncyI6W119.PBD0Qmf1yqX2RPPDqkp4XfCUnm5UVvBt8QHjkNDzcTDv_CZbBVhGS1GUcJE5DMxy1qnCkw_uzSGWYNAZ4wkKdhX-Mgf02-M8Sqvpd7Ol0VTJvRswCMqdl2ZyUwZa_Vi_6U2Duq145phEZLbkSOMSZ5kgPSgt1180wqtw_XDJsUTB4E65qj8aj24Evzg2wopswg82d8djFiRVKIZ3HoQtQLMBI3BCI94t6YdW_hcDnC1TzMRlFpC9idQdzw478yJyKkpcf-jRx9e3n3FGkudRg2c9Wj6R1n6rmh8u9ZbW0bEnMAgyYWT454Xt8x2fd2X7asiAK2mj_1VqBolLMa8Y4Q' 'https://172.16.40.4:8443/va/api/get-report?namespace=default/blue-orders-mysql-794b456cc8-svwhz/a3948d937af86210889b9416c9af69fc1bc52cd3dd481b8ebb6e094b99797154&access_group=default&source_type=container&report_type=vulnerability'"
-                println "cmd[${cmd}]"
-                sh(returnStdout: true, script:cmd)
+                sh """
+                #!/bin/bash
+                curl -k -s -XGET -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoianBrZHpxeWFwMjI1dWNyOW54YnIiLCJyZWFsbU5hbWUiOiJjdXN0b21SZWFsbSIsInVuaXF1ZVNlY3VyaXR5TmFtZSI6ImFkbWluIiwiaXNzIjoiaHR0cHM6Ly9pY3Atc2UtZGV2LWNsdXN0ZXIuaWNwOjk0NDMvb2lkYy9lbmRwb2ludC9PUCIsImF1ZCI6IjhiZGViNjM2ODAyOTBmOGQyMzM1M2UwNWYwMzhiNTY3IiwiZXhwIjoxNTI2NDAxODU0LCJpYXQiOjE1MjY0MDE4NTQsInN1YiI6ImFkbWluIiwidGVhbVJvbGVNYXBwaW5ncyI6W119.InRtHzzW_KNU7R7ahf67I1YPS3qrb9BvwBDbuQ9XR1r45PvsSK5rQl5vgOIU-jK97jpdndtdS1eIBqlI29KziXDMnheikpOTggZObQJ6xCzFioWHidFnFCcXfnV-fj5OW2lWO8ROfefac5iKzQXTuTsQlTY1kn9ZW_nVqwk-4Z12YP8zbhA7PRFi1sJHxtsmy-wNcB48chYdV4vGa8RI7PKuaOZQl2v72F6LFxJ_xYN9e0WOYDZwfHZ5Uex1LlZimV7prxdpC78YjbG9k_nvV4EQPCYv88g3POMDBnpPVuB4UmVqDaPs-cGG5fKz-FmRij72u1u7dKsWcr-e1cqkSw' 'https://172.16.40.4:8443/va/api/get-report?namespace=default/blue-web-c6c46447c-qm4tv/d65ec48faefe49115c8e86a59b438a525b9e8fe32905f9dce4c3b541d4d42180&access_group=default&source_type=container&report_type=vulnerability' | jq '.result.vulnerability.body.vulnerable_packages'
+                """
             }
             stage('Deploy new Docker Image') {
                 sh """

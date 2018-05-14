@@ -6,7 +6,7 @@ podTemplate(label: 'mypod',
     ],
     containers: [
         containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl', ttyEnabled: true, command: 'cat'),
-        containerTemplate(name: 'docker' , image: 'ibmcase/bluecompute-dataloader', ttyEnabled: true, command: 'cat')
+        containerTemplate(name: 'docker' , image: 'docker:17.06.1-ce', ttyEnabled: true, command: 'cat')
   ]) {
 
     node('mypod') {

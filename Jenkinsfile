@@ -47,6 +47,7 @@ podTemplate(label: 'mypod',
                     echo "There are 0 vulnerabilities detected in a container"
                 else
                     echo "No vulnerabilities detected in a container"
+                fi
                 """
             }
         }

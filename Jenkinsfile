@@ -47,9 +47,11 @@ podTemplate(label: 'mypod',
                 TOKEN=`cat /var/run/secrets/secret-token/token`
                 set -x
                 echo 'set token and container'
+                echo '\${TOKEN}'
                 VULNERABILITIES=`curl -k -s -XGET -H 'Authorization: Bearer \${TOKEN}' 'https://172.16.40.4:8443/va/api/get-report?namespace=default/jenkins-75d99f5657-pl6hs/d3ae07e93b34bdb8cd8a94dd6329c99e79ac0b8a0593a2537b2d0bd962a7a778&access_group=default&source_type=container&report_type=vulnerability' | jq '.result.vulnerability.body.vulnerable_packages'`
+                CONTAINER='testing'
                 if [ \${VULNERABILITIES} -ne 0 ]; then
-                    echo "There are \${VULNERABILITIES} vulnerabilities detected in CONTAINTER"
+                    echo "There are \${VULNERABILITIES} vulnerabilities detected in \${CONTAINTER}"
                     exit 1
                 else
                     echo "No vulnerabilities detected in CONTAINTER"

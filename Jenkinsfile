@@ -39,12 +39,12 @@ podTemplate(label: 'mypod',
             }
         }
         container('curl') {
-            stage('testing'){
+            stage('va'){
                 sh """
                 #!/bin/bash
                 set +x
-                TOKEN=`eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiMXRqc3Jwc3FhcDM2bjNzMG9tZjYiLCJyZWFsbU5hbWUiOiJjdXN0b21SZWFsbSIsInVuaXF1ZVNlY3VyaXR5TmFtZSI6ImFkbWluIiwiaXNzIjoiaHR0cHM6Ly9pY3Atc2UtZGV2LWNsdXN0ZXIuaWNwOjk0NDMvb2lkYy9lbmRwb2ludC9PUCIsImF1ZCI6IjhiZGViNjM2ODAyOTBmOGQyMzM1M2UwNWYwMzhiNTY3IiwiZXhwIjoxNTI2NDgyMjQ5LCJpYXQiOjE1MjY0ODIyNDksInN1YiI6ImFkbWluIiwidGVhbVJvbGVNYXBwaW5ncyI6W119.R0JBh0Z037oTjOLjla5egju8eRepPLCoXa5Mq3yUU9LB11953pj4EkepBpXdIS1fE2WtX994tiMpOIUE9WtbsQ7ay-N44CX57jKa5f_NNFeADEV5Ojtn5_gjCRbEv8AFfeT8ZJRFnGqwmZXxpVGjEGBUFnavAx-RERyJuKGl01PA6_2ZxXSmyWHzMh9HngwISpci8vAyIQS6rXepn9OXubLwIdvLztiPhNGHo-iTgk9BPmo5pChUIgXt5Y7s2omRemm5uhD6YpXdC0AyDkT4Tv-DQ5f_xXyp8GBKL5gFiS2qiDP7Hil7xp_EkZPQHCOCHL6odhBaFM0dhYup9aRv0A`
-                CONTAINER=`default/blue-web-c6c46447c-qm4tv/d65ec48faefe49115c8e86a59b438a525b9e8fe32905f9dce4c3b541d4d42180`
+                TOKEN=`eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoidGV6ano2dDU0eHVsMDYwZGZvZnQiLCJyZWFsbU5hbWUiOiJjdXN0b21SZWFsbSIsInVuaXF1ZVNlY3VyaXR5TmFtZSI6ImFkbWluIiwiaXNzIjoiaHR0cHM6Ly9pY3Atc2UtZGV2LWNsdXN0ZXIuaWNwOjk0NDMvb2lkYy9lbmRwb2ludC9PUCIsImF1ZCI6IjhiZGViNjM2ODAyOTBmOGQyMzM1M2UwNWYwMzhiNTY3IiwiZXhwIjoxNTI2NTc0NDQ0LCJpYXQiOjE1MjY1NzQ0NDQsInN1YiI6ImFkbWluIiwidGVhbVJvbGVNYXBwaW5ncyI6W119.Qb6GvkHZGemU-86md9uOa37WDOBljvYUQe_b2brwaymZeX6s5z0Ti8j6DuQni7cM3BXwpDlOau0vxGmYTVL4NwkTPv2v5X1xJB21ecTqNd_0LNJMJRY3YjBy1jbG0gLiuarr0-Z13ajvfivD8rDl0pnjyoBMPGFjirZSntU9Zbv8koU8qmB458TqNWmXh2f5CEo73s7K_OGfZLbVUFZa3ESM5AtD9sEd5LL_QGL3GCbZJ36rTJMNQMRTenr8nHikF6PR39ciG792wccDEHKZs1bl7Bj6Rg5B114mfHQw1GoNNzW4ZqYk6OObfPNEtJwwaSSP8DpX1QCIDprCuUBWXw`
+                CONTAINER=`default/jenkins-75d99f5657-pl6hs/d3ae07e93b34bdb8cd8a94dd6329c99e79ac0b8a0593a2537b2d0bd962a7a778`
                 set -x
                 echo 'set token and container'
                 VULNERABILITIES=`curl -k -s -XGET -H 'Authorization: Bearer \${TOKEN}' 'https://172.16.40.4:8443/va/api/get-report?namespace=\${CONTAINER}&access_group=default&source_type=container&report_type=vulnerability' | jq '.result.vulnerability.body.vulnerable_packages'`

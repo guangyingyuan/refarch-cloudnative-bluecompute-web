@@ -2,6 +2,7 @@ podTemplate(label: 'mypod',
     volumes: [
         hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock'),
         secretVolume(secretName: 'registry-account', mountPath: '/var/run/secrets/registry-account'),
+        secretVolume(secretName: 'secret-token', mountPath: '/var/run/secrets/secret-token'),
         configMapVolume(configMapName: 'registry-config', mountPath: '/var/run/configs/registry-config')
     ],
     containers: [
@@ -42,8 +43,8 @@ podTemplate(label: 'mypod',
             stage('va'){
                 sh """
                 #!/bin/bash
+                TOKEN=`cat /var/run/secrets/secret-token/token`
                 set +x
-                TOKEN=`eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoidGV6ano2dDU0eHVsMDYwZGZvZnQiLCJyZWFsbU5hbWUiOiJjdXN0b21SZWFsbSIsInVuaXF1ZVNlY3VyaXR5TmFtZSI6ImFkbWluIiwiaXNzIjoiaHR0cHM6Ly9pY3Atc2UtZGV2LWNsdXN0ZXIuaWNwOjk0NDMvb2lkYy9lbmRwb2ludC9PUCIsImF1ZCI6IjhiZGViNjM2ODAyOTBmOGQyMzM1M2UwNWYwMzhiNTY3IiwiZXhwIjoxNTI2NTc0NDQ0LCJpYXQiOjE1MjY1NzQ0NDQsInN1YiI6ImFkbWluIiwidGVhbVJvbGVNYXBwaW5ncyI6W119.Qb6GvkHZGemU-86md9uOa37WDOBljvYUQe_b2brwaymZeX6s5z0Ti8j6DuQni7cM3BXwpDlOau0vxGmYTVL4NwkTPv2v5X1xJB21ecTqNd_0LNJMJRY3YjBy1jbG0gLiuarr0-Z13ajvfivD8rDl0pnjyoBMPGFjirZSntU9Zbv8koU8qmB458TqNWmXh2f5CEo73s7K_OGfZLbVUFZa3ESM5AtD9sEd5LL_QGL3GCbZJ36rTJMNQMRTenr8nHikF6PR39ciG792wccDEHKZs1bl7Bj6Rg5B114mfHQw1GoNNzW4ZqYk6OObfPNEtJwwaSSP8DpX1QCIDprCuUBWXw`
                 CONTAINER=`default/jenkins-75d99f5657-pl6hs/d3ae07e93b34bdb8cd8a94dd6329c99e79ac0b8a0593a2537b2d0bd962a7a778`
                 set -x
                 echo 'set token and container'

@@ -2,7 +2,7 @@ podTemplate(label: 'mypod',
     volumes: [
         hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock'),
         secretVolume(secretName: 'registry-account', mountPath: '/var/run/secrets/registry-account'),
-        secretVolume(secretName: 'secret-token', mountPath: '/var/run/secrets/secret-token'),
+        secretVolume(secretName: 'token-secret', mountPath: '/var/run/secrets/token-secret'),
         configMapVolume(configMapName: 'registry-config', mountPath: '/var/run/configs/registry-config')
     ],
     containers: [
@@ -45,7 +45,7 @@ podTemplate(label: 'mypod',
                 #!/bin/bash
                 
                 set +x
-                TOKEN=`cat /var/run/secrets/secret-token/token`
+                TOKEN=`cat /var/run/secrets/token-secret/token`
                 CONTAINER='default/blue-orders-mysql-794b456cc8-2w45w/3a64e5f74bffdb98e0f305b80597df66b70317ffccb580c6c77c3175f0b77c8'
                 VULNERABILITIES=`curl -k -s -XGET -H "Authorization: Bearer \${TOKEN}" "https://172.16.40.4:8443/va/api/get-report?namespace=\${CONTAINER}&access_group=default&source_type=container&report_type=vulnerability" | jq '.result.vulnerability.body.vulnerable_packages'`
 

@@ -50,10 +50,10 @@ podTemplate(label: 'mypod',
                 VULNERABILITIES=`curl -k -s -XGET -H "Authorization: Bearer \${TOKEN}" "https://172.16.40.4:8443/va/api/get-report?namespace=\${CONTAINER}&access_group=default&source_type=container&report_type=vulnerability" | jq '.result.vulnerability.body.vulnerable_packages'`
 
                 if [ \${VULNERABILITIES} -ne 0 ]; then
-                    echo "There are \${VULNERABILITIES} vulnerabilities detected in \${CONTAINTER}"
+                    echo "There are \${VULNERABILITIES} vulnerabilities detected in \${CONTAINER}"
                     exit 1
                 else
-                    echo "No vulnerabilities detected in CONTAINTER"
+                    echo "No vulnerabilities detected in \${CONTAINER}"
                 fi
                 set -x
                 """

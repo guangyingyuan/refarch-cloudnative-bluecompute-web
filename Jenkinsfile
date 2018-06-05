@@ -46,9 +46,8 @@ podTemplate(label: 'mypod',
                 
                 set +x
                 TOKEN=`cat /var/run/secrets/secret-token/token`
-                CONTAINER='default/jenkins-75d99f5657-pl6hs/d3ae07e93b34bdb8cd8a94dd6329c99e79ac0b8a0593a2537b2d0bd962a7a778'
+                CONTAINER='default/blue-orders-mysql-794b456cc8-2w45w/3a64e5f74bffdb98e0f305b80597df66b70317ffccb580c6c77c3175f0b77c8'
                 VULNERABILITIES=`curl -k -s -XGET -H "Authorization: Bearer \${TOKEN}" "https://172.16.40.4:8443/va/api/get-report?namespace=\${CONTAINER}&access_group=default&source_type=container&report_type=vulnerability" | jq '.result.vulnerability.body.vulnerable_packages'`
-                set -x
 
                 if [ \${VULNERABILITIES} -ne 0 ]; then
                     echo "There are \${VULNERABILITIES} vulnerabilities detected in \${CONTAINTER}"
@@ -56,6 +55,7 @@ podTemplate(label: 'mypod',
                 else
                     echo "No vulnerabilities detected in CONTAINTER"
                 fi
+                set -x
                 """
             }
         }
